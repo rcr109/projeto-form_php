@@ -1,5 +1,7 @@
 <?php
 
+   session_start();
+
    $categorias = [];
    $categorias [] = 'infantil';
    $categorias [] = 'adolescente';
@@ -11,57 +13,70 @@
 
     // testando se os dados estão preenchidos
     if (empty($nome)){
-       echo "O nome não pode ser vazio.";
-       return;
+        $_SESSION['mensagem-de-erro'] = 'O NOME não pode ser vazio. Digite novamente.';
+        // envio da resposta a outra página
+        header('location:index.php');
     }
-   if (empty($idade)){
-       echo "A idade não pode ser vazia.";
-       return;
+    else if (empty($idade)){
+        $_SESSION['mensagem-de-erro'] = 'A IDADE não pode ser vazia. Digite novamente.';
+        header('location:index.php');
+        return;
     }
-
    // testando tamanho dos textos
-    if (strlen($nome) < 3){
-       echo "O nome deve conter ao menos 3 caracteres.";
-       return;
+    else if (strlen($nome) < 3){
+        $_SESSION['mensagem-de-erro'] = 'O NOME não pode ter menos que 3 caracteres. Digite novamente.';
+        header('location:index.php');        
+        return;
     }
-    if (strlen($nome) > 30){
-       echo "O nome deve conter no máximo 30 caracteres.";
-       return;
+    else if (strlen($nome) > 30){
+        $_SESSION['mensagem-de-erro'] = 'O NOME não pode ter meais que 30 caracteres. Digite novamente.';
+        header('location:index.php');        
+        return;
     }
 
    //testando se o valor digitado é numérico
-    if (!is_numeric($idade)){
-      echo "Digite um valor numérico para a idade.";
-      return;
+    else if (!is_numeric($idade)){
+        $_SESSION['mensagem-de-erro'] = 'O campo IDADE deve ser preenchido com um valor numérico. Digite novamente.';
+        header('location:index.php');        
+        return;
     } 
 
-
-
-
-   if ($idade >= 6 && $idade <= 12){
-       for ($i=0 ; $i < count($categorias); $i++){
-           if ($categorias[$i]=='infantil'){
-               echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
+    if ($idade >= 6 && $idade <= 12){
+        for ($i=0 ; $i < count($categorias); $i++){
+            if ($categorias[$i]=='infantil'){
+                $_SESSION['mensagem-de-processamento'] = "O nadador ". $nome. " compete na categoria ". $categorias[$i]. ".";
+                header('location:index.php'); 
+                return;
+                //echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
+            }
+        }
+    } else if ($idade >= 13 && $idade <= 18){
+        for ($i=0 ; $i < count($categorias); $i++){
+            if ($categorias[$i]=='adolescente'){
+                $_SESSION['mensagem-de-processamento'] = "O nadador ". $nome. " compete na categoria ". $categorias[$i]. ".";               
+                header('location:index.php'); 
+                return;
+                //echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
            }
        }
-   } else if ($idade >= 13 && $idade <= 18){
-       for ($i=0 ; $i < count($categorias); $i++){
-           if ($categorias[$i]=='adolescente'){
-               echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
-           }
-       }
-   } else if ($idade >= 19 && $idade <= 60){
-       for ($i=0 ; $i < count($categorias); $i++){
-           if ($categorias[$i]=='adulto'){
-               echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
-           }
-       }
-   } else if ($idade >=61){
-       for ($i=0 ; $i < count($categorias); $i++){
-           if ($categorias[$i]=='idoso'){
-               echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
-           }
-       }
-   }
+    } else if ($idade >= 19 && $idade <= 60){
+        for ($i=0 ; $i < count($categorias); $i++){
+            if ($categorias[$i]=='adulto'){
+                $_SESSION['mensagem-de-processamento'] = "O nadador ". $nome. " compete na categoria ". $categorias[$i]. ".";
+                header('location:index.php'); 
+                return;
+                //echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
+            }
+        }
+    } else if ($idade >=61){
+        for ($i=0 ; $i < count($categorias); $i++){
+            if ($categorias[$i]=='idoso'){
+                $_SESSION['mensagem-de-processamento'] = "O nadador ". $nome. " compete na categoria ". $categorias[$i]. ".";
+                header('location:index.php'); 
+                return;
+                //echo "O nadador ". $nome. " compete na categoria ", $categorias[$i], ".";
+            }
+        }
+    }
 
 ?>

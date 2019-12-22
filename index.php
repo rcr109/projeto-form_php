@@ -1,3 +1,8 @@
+<?php 
+  session_start();
+
+?>
+
 <!DOCTYPE html>
 
 <hmtl>
@@ -14,6 +19,17 @@
 <body>
    <p>"FORMULÁRIO PARA INSCRIÇÃO DE COMPETIDORES"</p>
    <form action="script.php" method="post">
+   <?php
+      // uso do ternário PHP
+      $mensagemdeerro = isset($_SESSION['mensagem-de-erro']) ? $_SESSION['mensagem-de-erro'] : '';
+      if(!empty($mensagemdeerro)){
+         echo $mensagemdeerro;
+      }
+      $mensagemdeprocessamento = isset($_SESSION['mensagem-de-processamento']) ? $_SESSION['mensagem-de-processamento'] : '';
+      if(!empty($mensagemdeprocessamento)){
+         echo $mensagemdeprocessamento;
+      }
+   ?>
       <p> Seu nome: <input type="text" name="nome"/></p>
       <p> Sua idade: <input type="text" name="idade"/></p>
       <p> <input type="submit" name="btenviar" value="Enviar"/></p>
