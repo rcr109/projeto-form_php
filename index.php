@@ -1,6 +1,5 @@
 <?php 
-  session_start();
-
+     include "servicos/servicosMensagem.php";
 ?>
 
 <!DOCTYPE html>
@@ -21,11 +20,11 @@
    <form action="script.php" method="post">
    <?php
       // uso do ternário PHP
-      $mensagemdeerro = isset($_SESSION['mensagem-de-erro']) ? $_SESSION['mensagem-de-erro'] : '';
+      $mensagemdeerro = getErrorMessage();
       if(!empty($mensagemdeerro)){
          echo $mensagemdeerro;
       }
-      $mensagemdeprocessamento = isset($_SESSION['mensagem-de-processamento']) ? $_SESSION['mensagem-de-processamento'] : '';
+      $mensagemdeprocessamento = getProcessMessage();
       if(!empty($mensagemdeprocessamento)){
          echo $mensagemdeprocessamento;
       }
